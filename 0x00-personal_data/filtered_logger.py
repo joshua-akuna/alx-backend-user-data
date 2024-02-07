@@ -47,6 +47,7 @@ def filter_datum(fields: List[str], redaction: str,
                          field + '=' + redaction + separator, message)
     return message
 
+
 def get_logger() -> logging.Logger:
     '''returns a logging.Logger object
     '''
