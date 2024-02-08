@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Defines a hash_password function to return a hashed password
+Defines a hash_password and is_valid functions
 """
 import bcrypt
 from bcrypt import hashpw
@@ -10,11 +10,13 @@ def hash_password(password: str) -> bytes:
     """
     Returns a hashed password
     Args:
-        password (str): password to be hashed
+        password: password to be hashed
+    Return:
+        bytes
     """
-    b = password.encode()
-    hashed = hashpw(b, bcrypt.gensalt())
-    return hashed
+    enc_pwd = password.encode()
+    hash_pwd = hashpw(enc_pwd, bcrypt.gensalt())
+    return hash_pwd
 
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
