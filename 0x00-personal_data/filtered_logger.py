@@ -5,7 +5,6 @@ import re
 from typing import List
 import logging
 import os
-from os import environ
 import mysql.connector
 
 
@@ -82,25 +81,6 @@ def _get_db() -> mysql.connector.connection.MySQLConnection:
 
     return db_conn
 
-
-def get_db() -> mysql.connector.connection.MySQLConnection:
-    """
-    Returns a MySQLConnection object for accessing Personal Data database
-
-    Returns:
-        A MySQLConnection object using connection details from
-        environment variables
-    """
-    username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
-    password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
-    host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
-    db_name = environ.get("PERSONAL_DATA_DB_NAME")
-
-    cnx = mysql.connector.connection.MySQLConnection(user=username,
-                                                     password=password,
-                                                     host=host,
-                                                     database=db_name)
-    return cnx
 
 def main():
     """
