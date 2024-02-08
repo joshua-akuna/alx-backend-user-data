@@ -2,6 +2,7 @@
 """The module defines the hash_password and is_valid functions"""
 
 import bcrypt
+from bcrypt import hashpw
 
 
 def hash_password(passwd: str) -> bytes:
@@ -9,7 +10,7 @@ def hash_password(passwd: str) -> bytes:
         in bytes
     """
     pwd = passwd.encode()
-    pwd_hash = bcrypt.hashpw(pwd, bcrypt.gensalt())
+    pwd_hash = hashpw(pwd, bcrypt.gensalt())
     return pwd_hash
 
 
