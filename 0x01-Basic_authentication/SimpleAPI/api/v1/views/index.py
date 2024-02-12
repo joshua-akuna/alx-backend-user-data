@@ -31,3 +31,9 @@ def unauthorized():
     """endpoint for testing unauthorized handler
     """
     abort(401)
+
+@app_views.route('forbidden', methods=['GET'], strict_slashes=False)
+def forbidden():
+    """Endpoint for testing forbidden handler
+    """
+    abort(403)
