@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-Definition of class Auth
+Defines the class Auth
 """
 from flask import request
-from typing import (
-    List,
-    TypeVar
-)
+from typing import List, TypeVar
 
 
 class Auth:
@@ -30,13 +27,13 @@ class Auth:
         elif path in excluded_paths:
             return False
         else:
-            for i in excluded_paths:
-                if i.startswith(path):
+            for p in excluded_paths:
+                if p.startswith(path):
                     return False
-                if path.startswith(i):
+                if path.startswith(p):
                     return False
-                if i[-1] == "*":
-                    if path.startswith(i[:-1]):
+                if p[-1] == "*":
+                    if path.startswith(p[:-1]):
                         return False
         return True
 
@@ -46,10 +43,10 @@ class Auth:
         """
         if request is None:
             return None
-        header = request.headers.get('Authorization')
-        if header is None:
+        auth_header = request.headers.get('Authorization')
+        if auth_header is None:
             return None
-        return header
+        return auth_header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
