@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """
-Defines the class Auth
+Definition of class Auth
 """
+import os
 from flask import request
-from typing import List, TypeVar
+from typing import (
+    List,
+    TypeVar
+)
 
 
 class Auth:
@@ -27,13 +31,13 @@ class Auth:
         elif path in excluded_paths:
             return False
         else:
-            for p in excluded_paths:
-                if p.startswith(path):
+            for i in excluded_paths:
+                if i.startswith(path):
                     return False
-                if path.startswith(p):
+                if path.startswith(i):
                     return False
-                if p[-1] == "*":
-                    if path.startswith(p[:-1]):
+                if i[-1] == "*":
+                    if path.startswith(i[:-1]):
                         return False
         return True
 
@@ -43,13 +47,27 @@ class Auth:
         """
         if request is None:
             return None
-        auth_header = request.headers.get('Authorization')
-        if auth_header is None:
+        header = request.headers.get('Authorization')
+        if header is None:
             return None
-        return auth_header
+        return header
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
         Returns a User instance from information from a request object
         """
         return None
+
+    def session_cookie(self, request=None):
+        """
+        Returns a cookie from a request
+        Args:
+            request : request object
+        Return:
+            value of _my_session_id cookie from request object
+        """
+        if request is None:
+            return None
+        session_name = os.getenv('SESSION_NAME')
+        return request.cookies.get(session_name)
+
