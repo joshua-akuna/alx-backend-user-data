@@ -1,1 +1,1 @@
-# To be updated
+# 0x02. Session Authentication
