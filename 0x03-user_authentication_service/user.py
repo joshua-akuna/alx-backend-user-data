@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+"""User class
+"""
 
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, String, Column
@@ -7,6 +9,8 @@ Base = declarative_base()
 
 
 class User(Base):
+    """Declared the User sub class
+    """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
