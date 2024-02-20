@@ -6,12 +6,13 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
 
 from user import Base, User
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 
 class DB:
     """DB class
     """
-
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
@@ -44,3 +45,20 @@ class DB:
         self._session.commit()
         return new_user
 
+    def find_user_by(self, **kwargs) -> User:
+        """Finds user in the database based on the provided keyword args
+
+            Args:
+                **kwargs: Arbitrary keyword argument to filter the query
+
+            Returns:
+                User: User object
+        """
+        all_users = self._session.query(User)
+        for key, val in kwargs.items():
+            if key not in User.__dict__:
+                raise InvalidRequestError
+            for user in all_users:
+                if getattr(user, key) == val:
+                    return user
+        raise NoResultFound
