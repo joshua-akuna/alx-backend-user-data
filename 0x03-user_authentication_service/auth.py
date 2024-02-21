@@ -80,3 +80,39 @@ class Auth():
             return False
         # validate user password
         return bcrypt.checkpw(password.encode('utf-8'), user.hashed_password)
+
+    def create_session(self, email: str) -> str:
+        """finds the user corresponding to the email, generate a new
+            UUID and store it in the database as the user's session_id
+
+
+            Arg:
+                email (str): email of the user
+
+            returns:
+                generated UUID for the user session
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+        except NoResultFound:
+            return None
+        else:
+            user.session_id = _generate_uuid()
+            return user.session_id
+
+    def get_user_from_session_id(self, session_id: str) -> User:
+        """returns the corresponding user with session_id or None
+
+            Args:
+                session_id (str): session_id of User to return
+
+            returns: User instance with session_id
+        """
+        if session_id = None:
+            return None
+        try:
+            user = self._db.find_user_by(session_id=session_id)
+        except NoResultFound:
+            return None
+        else:
+            return user
